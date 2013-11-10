@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Potato implements Tuber {
 
   private final List<Condiment> condiments = new ArrayList<Condiment>();
+  private final List<Seasoning> seasonings = new ArrayList<Seasonings>();
 
   public static void main(String[] args) {
     Potato potato = new Potato();
@@ -14,12 +15,19 @@ public class Potato implements Tuber {
 
   public boolean prepare() {
     this.addCondiments("sour cream", "chives", "butter", "crumbled bacon", "grated cheese");
+    this.addSeasonings("garlic", "black pepper", "sea salt", "olive oil")
     return this.isDelicious();
   }
 
   public void addCondiments(String... names) {
     synchronized (condiments) {
       for (String condimentName : names) condiments.add(new Condiment(condimentName));
+    }
+  }
+  
+  public void addSeasonings(String... names) {
+    synchronized (seasonings) {
+      for (String seasoningName : names) seasonings.add(new Seasoning(seasoningName));
     }
   }
 
@@ -35,6 +43,18 @@ public class Potato implements Tuber {
       this.name = name;
     }
 
+    public String getName() {
+      return this.name;
+    }
+  }
+  
+  private class Seasoning {
+    private final String name;
+    
+    public Condiment(String name) {
+      this.name = name;
+    }
+    
     public String getName() {
       return this.name;
     }
